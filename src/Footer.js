@@ -34,4 +34,11 @@ width: 91px;
 color: #ffffff;
 margin-bottom: 40px;
 border-radius: 50%;
+/* p{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: 10px solid #52b6ff;
+    border-left-color: #FFFFFF;
+} */
 `
