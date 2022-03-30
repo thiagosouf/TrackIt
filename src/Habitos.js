@@ -53,6 +53,7 @@ const Plus = styled.button`
     border-radius: 15%;
     font-size: 27px;
     color: #ffffff;
+    border: none;
 `
 const SemHabito = styled.span`
 color: #666666;

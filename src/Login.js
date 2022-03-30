@@ -76,7 +76,7 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 a{
-    font-size: 14px;
+    font-size: 18px;
     color: #52b6ff;
 
 }
