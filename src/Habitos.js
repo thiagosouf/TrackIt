@@ -21,7 +21,7 @@ export default function Habitos(){
                         <Plus onClick={()=>setConteudo(<Conteudo setConteudo={setConteudo} token={token}/>)}><p>+</p></Plus>
                    </TopoPainel>
                      {conteudo}
-                     <ListarHabitos />
+                     <ListarHabitos token={token} />
                      
                    {/* <SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito>    */}
                </Painel>
