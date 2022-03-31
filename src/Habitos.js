@@ -1,4 +1,5 @@
 import Topo from "./Topo"
+import ListarHabitos from "./ListarHabitos"
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import {useLocation } from "react-router-dom";
@@ -6,20 +7,23 @@ import Footer from "./Footer";
 import { useState } from "react";
 import Conteudo from "./Conteudo";
 
-export default function Habitos(props){
+export default function Habitos(){
     const { state } = useLocation();
     const { nome, foto, token } = state;
-    const [ conteudo, setConteudo] = useState("Teste");
+    const [ conteudo, setConteudo] = useState("");
+    
     return(
-        <Corpo>
+        <Corpo> 
                <Topo foto={foto}/>
                <Painel>
                    <TopoPainel>
                         <p>Meus hábitos</p>
-                        <Plus onClick={()=>setConteudo(<Conteudo />)}><p>+</p></Plus>
+                        <Plus onClick={()=>setConteudo(<Conteudo setConteudo={setConteudo} token={token}/>)}><p>+</p></Plus>
                    </TopoPainel>
                      {conteudo}
-                   <SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito>   
+                     <ListarHabitos />
+                     
+                   {/* <SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito>    */}
                </Painel>
                <Footer></Footer>
 
@@ -55,7 +59,7 @@ const Plus = styled.button`
     color: #ffffff;
     border: none;
 `
-const SemHabito = styled.span`
-color: #666666;
-font-size: 18px;
-`
+// const SemHabito = styled.span`
+// color: #666666;
+// font-size: 18px;
+// `

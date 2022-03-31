@@ -1,14 +1,37 @@
 import styled from 'styled-components';
 import { useState } from "react";
+import axios from "axios";
+let diasSelecionados = []
 
-export default function Conteudo() {
+export default function Conteudo(props) {
     const [habito, setHabito] = useState("");
     const dias = [{ D: "D", valor: 0 }, { D: "S", valor: 1 }, { D: "T", valor: 2 }, { D: "Q", valor: 3 }, { D: "Q", valor: 4 }, { D: "S", valor: 5 }, { D: "S", valor: 6 }];
-    let diasSelecionados = []
 
-    function CriarHabito() {
+    const Authorization = {
+        headers: {
+            Authorization: `Bearer ${props.token}`
+        }
+    }
+    console.log(props.token)
+
+    function CriarHabito(event) {
+        event.preventDefault();
         console.log(habito)
         console.log(diasSelecionados)
+
+        const requisition = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", {
+            name: habito,
+            days: diasSelecionados
+        }, Authorization);
+        requisition.then(response => {
+            console.log(response.data);
+            alert("Seu Habito foi criado com sucesso!");
+            diasSelecionados = []
+            props.setConteudo("")
+            // desabilitar janela conteudo
+            // mostrar habito criado
+        });
+        requisition.catch(err => alert("deu ruim :("));
     }
 
     return (
@@ -20,7 +43,10 @@ export default function Conteudo() {
                         {dias.map(dia => { return (<DiaSemana dias={diasSelecionados} letra={dia.D} valor={dia.valor}></DiaSemana>) })}
                     </Semana>
                     <Botoes>
-                        <BotaoCancelar>Cancelar</BotaoCancelar>
+                        <BotaoCancelar onClick={() => {
+                            diasSelecionados = []
+                            props.setConteudo("")
+                        }}>Cancelar</BotaoCancelar>
                         <BotaoSalvar type="submit">Salvar</BotaoSalvar>
                     </Botoes>
                 </Formulario>
@@ -37,7 +63,7 @@ function DiaSemana(props) {
 
     return selecionado === false ? (
         <>
-            <BotaoOff type="button" value={props.letra} onClick={() => {
+            <BotaoOff type="button" value="" onClick={() => {
                 console.log(props.valor)
                 props.dias.push(props.valor)
                 setSelecionado(true)
@@ -45,7 +71,7 @@ function DiaSemana(props) {
             }}>{props.letra}</BotaoOff>
         </>
     ) : (<>
-        <BotaoOn type="button" value={props.letra} onClick={() => {
+        <BotaoOn type="button" value={props.valor} onClick={() => {
             console.log(props.valor)
             props.dias.splice(props.dias.indexOf(props.valor), 1)
             setSelecionado(false)
