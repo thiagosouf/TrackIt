@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {IoTrashOutline} from "react-icons/io5"
 import { useState, useEffect } from "react"
 import axios from "axios";
 const dias = [{ D: "D", valor: 0 }, { D: "S", valor: 1 }, { D: "T", valor: 2 }, { D: "Q", valor: 3 }, { D: "Q", valor: 4 }, { D: "S", valor: 5 }, { D: "S", valor: 6 }];
@@ -24,18 +25,18 @@ export default function ListarHabitos(props) {
             setTemHabito(data);
         });
         promise.catch(err => alert("deu ruim :("));
-    }, [])
+    },[])
 
     console.log(temHabito)
-    return temHabito !== null ? (
+    return temHabito != null ? (
         <>
-            {temHabito.map(habito => 
-            <ComHabito>
-                <p>{habito.name}</p>
-                <Semana>
-                    {dias.map(dia => { return (<DiaSemana letra={dia.D} valor={dia.valor}></DiaSemana>) })}
-                </Semana>
-            </ComHabito>)}
+            {temHabito.map(habito =>
+                <ComHabito>
+                    <Nome>{habito.name}<IoTrashOutline onClick={()=>{<ExcluirHabito id={habito.id} token={props.token}/>}}/></Nome>
+                    <Semana>
+                        {dias.map(dia => { return (<DiaSemana letra={dia.D} valor={dia.valor} diasRecebidos={habito.days}></DiaSemana>) })}
+                    </Semana>
+                </ComHabito>)}
         </>
     ) : (
         <><SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito></>
@@ -45,25 +46,31 @@ export default function ListarHabitos(props) {
 
 
 function DiaSemana(props) {
-    const [selecionado, setSelecionado] = useState(false);
+    let verificador = props.diasRecebidos.find(dia => dia === props.valor)
 
-    return props.valor === false ? (
+    return verificador != undefined ? (
         <>
-            <BotaoOff type="button" value="" onClick={() => {
-                console.log(props.valor)
-                props.dias.push(props.valor)
-                setSelecionado(true)
-                console.log(props.dias)
-            }}>{props.letra}</BotaoOff>
+            <BotaoOn type="button" value={props.valor}>{props.letra}</BotaoOn>
         </>
-    ) : (<>
-        <BotaoOn type="button" value={props.valor} onClick={() => {
-            console.log(props.valor)
-            props.dias.splice(props.dias.indexOf(props.valor), 1)
-            setSelecionado(false)
-            console.log(props.dias)
-        }}>{props.letra}</BotaoOn>
-    </>)
+    ) : (
+        <>
+            <BotaoOff type="button" value={props.valor}>{props.letra}</BotaoOff>
+        </>
+    )
+}
+
+function ExcluirHabito(props){
+    console.log("entrou aqui")
+    const Authorization = {
+        headers: {
+            Authorization: `Bearer ${props.token}`
+        }
+    }
+    const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${props.id}`, Authorization);
+    promise.then(response => {
+        console.log(response.data);
+    });
+    promise.catch(err => alert("deu ruim :("));
 }
 
 const SemHabito = styled.span`
@@ -71,16 +78,26 @@ color: #666666;
 font-size: 18px;
 `
 const ComHabito = styled.div`
-height: 91px;
-width: 340px;
+height: 95px;
+width: 95%;
 background-color: #ffffff;
 color: #666666;
 font-size: 20px;
-`
+margin-bottom: 20px;
+padding-left: 5%;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
 
+`
+const Nome = styled.span`
+display: flex;
+justify-content: space-between;
+margin: 0;
+margin-right: 2%;
+`
 const Semana = styled.div`
 display: flex;
-margin-left: 20px;
 `
 const BotaoOff = styled.button`
     background-color: #ffffff;

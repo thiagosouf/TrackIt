@@ -34,7 +34,8 @@ export default function Habitos(){
 const Corpo = styled.div`
     background-color: #e5e5e5;
     font-family: 'Lexend Deca', sans-serif;
-    height: 100vh;
+    height: 100%;
+    padding-bottom: 70px;
 `
 const TopoPainel = styled.div`
     display: flex;
