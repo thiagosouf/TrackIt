@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Logo from "./Logo"
 
-export default function Login() {
+export default function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -22,7 +22,9 @@ export default function Login() {
             console.log(response.data.name)
             console.log(response.data.image)
             console.log(response.data.token)
+            props.setCodigo(response.data);
             alert("Seu Login foi realizado com sucesso!");
+            
             navigate("/habitos", { state: {nome: response.data.name, foto: response.data.image , token: response.data.token} });
             // , state:{nome: nome, email: email, foto: foto});
             // { state: { nome: nome, dia: dia.date, hora: assentos.name, assento: lugaresReservados, nome: nome, cpf: cpf } });

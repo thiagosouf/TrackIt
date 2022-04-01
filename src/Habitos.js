@@ -22,8 +22,7 @@ export default function Habitos(){
                    </TopoPainel>
                      {conteudo}
                      <ListarHabitos token={token} conteudo={conteudo}/>
-                     
-                   {/* <SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito>    */}
+                   
                </Painel>
                <Footer></Footer>
 

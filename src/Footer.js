@@ -1,11 +1,13 @@
 import styled from "styled-components"
+import { useNavigate} from "react-router-dom";
 
 export default function Footer(){
-    
+    const navigate = useNavigate();
     return(
      <FooterStyle>
          <p>Hábitos</p>
-         <BotaoCentro><p>Hoje</p></BotaoCentro>
+         <BotaoCentro onClick={()=>navigate("/hoje")}><p>Hoje</p></BotaoCentro>
+         
          <p>Histórico</p>
      </FooterStyle>   
     )
