@@ -9,6 +9,7 @@ const dias = [{ D: "D", valor: 0 }, { D: "S", valor: 1 }, { D: "T", valor: 2 }, 
 
 export default function ListarHabitos(props) {
     const [temHabito, setTemHabito] = useState([]);
+    const [mensagem, setMensagem] = useState("");
 
     const Authorization = {
         headers: {
@@ -25,14 +26,18 @@ export default function ListarHabitos(props) {
             setTemHabito(data);
         });
         promise.catch(err => alert("deu ruim :("));
-    },[])
+    },[mensagem, props.conteudo])
 
     console.log(temHabito)
-    return temHabito != null ? (
+    console.log("mostrar conteudo")
+    console.log(props.conteudo)
+    return temHabito.length >0  ? (
         <>
             {temHabito.map(habito =>
                 <ComHabito>
-                    <Nome>{habito.name}<IoTrashOutline onClick={()=>{<ExcluirHabito id={habito.id} token={props.token}/>}}/></Nome>
+                    <Nome>{habito.name}
+                    <button onClick={() => {ExcluirHabito(habito.id, props.token, setMensagem)}}><IoTrashOutline/></button>
+                    </Nome>
                     <Semana>
                         {dias.map(dia => { return (<DiaSemana letra={dia.D} valor={dia.valor} diasRecebidos={habito.days}></DiaSemana>) })}
                     </Semana>
@@ -48,7 +53,7 @@ export default function ListarHabitos(props) {
 function DiaSemana(props) {
     let verificador = props.diasRecebidos.find(dia => dia === props.valor)
 
-    return verificador != undefined ? (
+    return verificador !== undefined ? (
         <>
             <BotaoOn type="button" value={props.valor}>{props.letra}</BotaoOn>
         </>
@@ -59,16 +64,18 @@ function DiaSemana(props) {
     )
 }
 
-function ExcluirHabito(props){
+function ExcluirHabito(id, token, setMensagem){
     console.log("entrou aqui")
+    console.log(token)
     const Authorization = {
         headers: {
-            Authorization: `Bearer ${props.token}`
+            Authorization: `Bearer ${token}`
         }
     }
-    const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${props.id}`, Authorization);
+    const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, Authorization);
     promise.then(response => {
-        console.log(response.data);
+        console.log("habito excluido");
+        setMensagem(`Hábito ${id} excluido com sucesso!`)
     });
     promise.catch(err => alert("deu ruim :("));
 }
@@ -88,6 +95,7 @@ padding-left: 5%;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
+border-radius: 15px;
 
 `
 const Nome = styled.span`

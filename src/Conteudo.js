@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from "react";
 import axios from "axios";
+import ListarHabitos from './ListarHabitos';
 let diasSelecionados = []
 
 export default function Conteudo(props) {
@@ -28,6 +29,7 @@ export default function Conteudo(props) {
             alert("Seu Habito foi criado com sucesso!");
             diasSelecionados = []
             props.setConteudo("")
+            
             // desabilitar janela conteudo
             // mostrar habito criado
         });
