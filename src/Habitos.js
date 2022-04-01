@@ -9,7 +9,7 @@ import Conteudo from "./Conteudo";
 
 export default function Habitos(){
     const { state } = useLocation();
-    const { nome, foto, token } = state;
+    const { foto, token } = state;
     const [ conteudo, setConteudo] = useState("");
     
     return(
@@ -24,7 +24,7 @@ export default function Habitos(){
                      <ListarHabitos token={token} conteudo={conteudo}/>
                    
                </Painel>
-               <Footer></Footer>
+               <Footer foto={foto} token={token}></Footer>
 
         </Corpo>
     )

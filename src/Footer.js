@@ -1,11 +1,12 @@
 import styled from "styled-components"
 import { useNavigate} from "react-router-dom";
 
-export default function Footer(){
+export default function Footer(props){
+    const { foto, token } = props;
     const navigate = useNavigate();
     return(
      <FooterStyle>
-         <p>Hábitos</p>
+         <p onClick={()=>navigate("/habitos", { state: {foto: foto , token: token} })}>Hábitos</p>
          <BotaoCentro onClick={()=>navigate("/hoje")}><p>Hoje</p></BotaoCentro>
          
          <p>Histórico</p>

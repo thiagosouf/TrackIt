@@ -25,7 +25,7 @@ export default function Login(props) {
             props.setCodigo(response.data);
             alert("Seu Login foi realizado com sucesso!");
             
-            navigate("/habitos", { state: {nome: response.data.name, foto: response.data.image , token: response.data.token} });
+            navigate("/habitos", { state: {foto: response.data.image , token: response.data.token} });
             // , state:{nome: nome, email: email, foto: foto});
             // { state: { nome: nome, dia: dia.date, hora: assentos.name, assento: lugaresReservados, nome: nome, cpf: cpf } });
         });

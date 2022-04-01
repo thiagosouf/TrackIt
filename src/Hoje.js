@@ -4,12 +4,18 @@ import { useState ,useEffect } from 'react';
 import Footer from "./Footer";
 import axios from 'axios';
 import ListarHoje from "./ListarHoje";
+import dayjs from "dayjs";
+
 
 export default function Hoje(props) {
     console.log("entrou aqui")
     const {codigo} = props;
     console.log(codigo)
     const [habitosHoje, setHabitosHoje] = useState([]);
+    const [progresso, setProgresso] = useState("Nenhum hábito concluido ainda");
+    const diaDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+    
+    
 
 
     const Authorization = {
@@ -29,17 +35,20 @@ export default function Hoje(props) {
         promise.catch(err => alert("deu ruim :("));
     },[])
     console.log(habitosHoje)
+    console.log("dayjs")
+    console.log(dayjs().day())
+
     return (
         <Corpo>
             <Topo foto={codigo.image} />
             <Painel>
                 <TopoPainel>
-                    <p>Segunda, 17/05</p>
-                    <span>Nenhum hábito concluido ainda</span>
+                    {diaDaSemana[dayjs().day()]}, {dayjs().format("DD/MM")}
+                    <span>{progresso}</span>
                 </TopoPainel>
                 <ListarHoje token={codigo.token} conteudo={habitosHoje} />
             </Painel>
-            <Footer></Footer>
+            <Footer foto= {codigo.image} token={codigo.token}></Footer>
 
         </Corpo>)
     }
@@ -56,8 +65,17 @@ const Corpo = styled.div`
 `
 const TopoPainel = styled.div`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     font-size: 23px;
     color: #126BA5;
+    margin: 28px 0px;
+    span{
+        font-size: 18px;
+        color: #bababa;
+    }
     `
+
+//falta fazer o botao check
+//falta atualizar o progresso
+//falta atualizar listar HJ, sequencia atual e seu recorde (post)
+//falta a tela do historico
