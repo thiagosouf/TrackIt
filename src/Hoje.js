@@ -7,6 +7,8 @@ import ListarHoje from "./ListarHoje";
 import dayjs from "dayjs";
 
 
+
+
 export default function Hoje(props) {
     console.log("entrou aqui")
     const {codigo} = props;
@@ -14,8 +16,15 @@ export default function Hoje(props) {
     const [habitosHoje, setHabitosHoje] = useState([]);
     const [progresso, setProgresso] = useState("Nenhum hábito concluido ainda");
     const diaDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+    const [porcentagem, setPorcentagem] = useState(0);
     
-    
+    function Verdade(valor){
+        return valor.done===true
+    }
+    let total = habitosHoje.filter(Verdade).length/habitosHoje.length;
+    console.log("total")
+    console.log(total)
+    // setPorcentagem(total/habitosHoje.length)
 
 
     const Authorization = {
@@ -31,12 +40,17 @@ export default function Hoje(props) {
             const { data } = response;
             console.log(data);
             setHabitosHoje(data);
+            
         });
         promise.catch(err => alert("deu ruim :("));
-    },[])
+    },[porcentagem])
+    console.log("habitos hoje")
     console.log(habitosHoje)
     console.log("dayjs")
     console.log(dayjs().day())
+    console.log("porcentagem")
+    console.log(porcentagem)
+
 
     return (
         <Corpo>
@@ -46,7 +60,7 @@ export default function Hoje(props) {
                     {diaDaSemana[dayjs().day()]}, {dayjs().format("DD/MM")}
                     <span>{progresso}</span>
                 </TopoPainel>
-                <ListarHoje token={codigo.token} conteudo={habitosHoje} />
+                <ListarHoje token={codigo.token} total={total} setPorcentagem={setPorcentagem} conteudo={habitosHoje} />
             </Painel>
             <Footer foto= {codigo.image} token={codigo.token}></Footer>
 

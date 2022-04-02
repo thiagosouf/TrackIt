@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function App() {
     const [codigo, setCodigo] = useState('');
+    
     return (
         <>
             <BrowserRouter>

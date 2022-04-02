@@ -1,10 +1,19 @@
 import styled from "styled-components"
 import {BsCheckLg} from "react-icons/bs"
+import { useState } from "react";
+import axios from "axios";
 
 export default function ListarHoje(props) {
-    const { conteudo } = props;
+    const { conteudo, token, setPorcentagem, total} = props;
+    const [cor, setCor] = useState(``);
+    const [validacao, setValidacao] = useState(false);
     console.log("conteudo de hj")
     console.log(conteudo)
+    console.log("setPorcentagem")
+    console.log(setPorcentagem)
+    //nao preciso colocar um set bool, posso colocar uma variavel normal que muda pelo id
+    if (validacao) (setPorcentagem(total))
+
     return conteudo.length > 0 ? (
         <>
 
@@ -16,10 +25,10 @@ export default function ListarHoje(props) {
                                 {dia.name}
                             </Nome>
 
-                            <InfoHJ>Sequencia atual: {dia.currentSequence} dias</InfoHJ>
-                            <InfoHJ>Seu recorder: {dia.highestSequence} dias</InfoHJ>
+                            <InfoHJ>Sequencia atual: <span style={{color: `${cor}`}}>{dia.currentSequence} dias</span></InfoHJ>
+                            <InfoHJ>Seu recorder: <span style={{color: (dia.currentSequence===dia.highestSequence)? `${cor}` : ``}}>{dia.highestSequence} dias</span></InfoHJ>
                         </InfoHabito>
-                        <CheckHabito><BsCheckLg/></CheckHabito>
+                        <CheckHabito onClick={() => {SelecionarBotao(token, dia.id, setValidacao)}}><BsCheckLg  /></CheckHabito>
                     </ComHabito>
                 )
             })}
@@ -28,6 +37,28 @@ export default function ListarHoje(props) {
     ) : (
         <SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito>
     )
+}
+
+function SelecionarBotao(token, diaId, setValidacao){
+    console.log("clicou")
+    console.log(diaId)
+    console.log(token)
+
+
+    const Authorization = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/check`,{}, Authorization);
+    requisicao.then(response => {
+        console.log("item marcado");
+        setValidacao(true)
+        
+
+     });
+    requisicao.catch(err => alert("deu ruim :("));
 }
 
 const ComHabito = styled.div`
@@ -62,7 +93,7 @@ color: #666666;
 font-size: 18px;
 `
 
-const CheckHabito= styled.div`
+const CheckHabito= styled.button`
 height: 69px;
 width: 69px;
 background-color: #EBEBEB;
