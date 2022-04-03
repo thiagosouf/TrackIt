@@ -5,14 +5,53 @@ import axios from "axios";
 
 export default function ListarHoje(props) {
     const { conteudo, token, setPorcentagem, total} = props;
-    const [cor, setCor] = useState(``);
+    const [cor, setCor] = useState(`#8FC549`);
     const [validacao, setValidacao] = useState(false);
     console.log("conteudo de hj")
     console.log(conteudo)
     console.log("setPorcentagem")
-    console.log(setPorcentagem)
     //nao preciso colocar um set bool, posso colocar uma variavel normal que muda pelo id
-    if (validacao) (setPorcentagem(total))
+    function SelecionarBotao(token, diaId, diaDone){
+        console.log("clicou")
+        console.log(diaId)
+        console.log(token)
+    
+        const Authorization = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    
+        const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/check`,{}, Authorization);
+        requisicao.then(response => {
+            console.log("item marcado");
+            setPorcentagem(diaId)
+            
+    
+         });
+        requisicao.catch(err => alert("deu ruim :("));
+    }
+
+    function DesmarcarBotao(token, diaId, diaDone){
+        console.log("clicou")
+        console.log(diaId)
+        console.log(token)
+    
+        const Authorization = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    
+        const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/uncheck`,{}, Authorization);
+        requisicao.then(response => {
+            console.log("item marcado");
+            setPorcentagem(diaId)
+            
+    
+         });
+        requisicao.catch(err => alert("deu ruim :("));
+    }
 
     return conteudo.length > 0 ? (
         <>
@@ -25,10 +64,16 @@ export default function ListarHoje(props) {
                                 {dia.name}
                             </Nome>
 
-                            <InfoHJ>Sequencia atual: <span style={{color: `${cor}`}}>{dia.currentSequence} dias</span></InfoHJ>
-                            <InfoHJ>Seu recorder: <span style={{color: (dia.currentSequence===dia.highestSequence)? `${cor}` : ``}}>{dia.highestSequence} dias</span></InfoHJ>
+                            <InfoHJ>Sequencia atual: <span style={{color: dia.done?  `${cor}` : ``}}>{dia.currentSequence} dias</span></InfoHJ>
+                            <InfoHJ>Seu recorder: <span style={{color: (dia.done && dia.currentSequence===dia.highestSequence)? `${cor}` : ``}}>{dia.highestSequence} dias</span></InfoHJ>
                         </InfoHabito>
-                        <CheckHabito onClick={() => {SelecionarBotao(token, dia.id, setValidacao)}}><BsCheckLg  /></CheckHabito>
+                        {dia.done? (
+                            <CheckHabito style={{backgroundColor: `${cor}`}} onClick={() => {DesmarcarBotao(token, dia.id, dia.done)}}><BsCheckLg  /></CheckHabito>)
+                        :
+                            <CheckHabito onClick={() => {SelecionarBotao(token, dia.id, dia.done)}}><BsCheckLg  /></CheckHabito>
+                        }
+                        
+                        
                     </ComHabito>
                 )
             })}
@@ -37,28 +82,6 @@ export default function ListarHoje(props) {
     ) : (
         <SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito>
     )
-}
-
-function SelecionarBotao(token, diaId, setValidacao){
-    console.log("clicou")
-    console.log(diaId)
-    console.log(token)
-
-
-    const Authorization = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-
-    const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/check`,{}, Authorization);
-    requisicao.then(response => {
-        console.log("item marcado");
-        setValidacao(true)
-        
-
-     });
-    requisicao.catch(err => alert("deu ruim :("));
 }
 
 const ComHabito = styled.div`
@@ -96,7 +119,6 @@ font-size: 18px;
 const CheckHabito= styled.button`
 height: 69px;
 width: 69px;
-background-color: #EBEBEB;
 border: 1px solid #e7e7e7;
 border-radius: 10%;
 display: flex;

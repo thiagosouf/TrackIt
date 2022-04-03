@@ -24,8 +24,6 @@ export default function Hoje(props) {
     let total = habitosHoje.filter(Verdade).length/habitosHoje.length;
     console.log("total")
     console.log(total)
-    // setPorcentagem(total/habitosHoje.length)
-
 
     const Authorization = {
         headers: {
@@ -58,7 +56,12 @@ export default function Hoje(props) {
             <Painel>
                 <TopoPainel>
                     {diaDaSemana[dayjs().day()]}, {dayjs().format("DD/MM")}
-                    <span>{progresso}</span>
+                    {total === 0 ? (
+                        <span>{progresso}</span>
+                        ):(
+                            <span style={{color: `#8FC549`}}>{parseInt(total*100)}% concluído</span>
+                        )
+                    }
                 </TopoPainel>
                 <ListarHoje token={codigo.token} total={total} setPorcentagem={setPorcentagem} conteudo={habitosHoje} />
             </Painel>
