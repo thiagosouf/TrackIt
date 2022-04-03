@@ -21,7 +21,11 @@ export default function Hoje(props) {
     function Verdade(valor){
         return valor.done===true
     }
-    let total = habitosHoje.filter(Verdade).length/habitosHoje.length;
+    let total = 0
+    habitosHoje.length>0? 
+    total = habitosHoje.filter(Verdade).length/habitosHoje.length
+    :
+    total = 0;
     console.log("total")
     console.log(total)
 
