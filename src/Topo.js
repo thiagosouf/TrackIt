@@ -11,10 +11,13 @@ export default function Topo(props){
 }
 
 const TopoStyle = styled.div`
+    position: fixed;
+    top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 70px;
+    width: 90vw;
     background-color: #126BA5;
     padding: 0 10px;
     img{

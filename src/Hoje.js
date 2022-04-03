@@ -14,10 +14,9 @@ export default function Hoje(props) {
     const {codigo} = props;
     console.log(codigo)
     const [habitosHoje, setHabitosHoje] = useState([]);
-    const [progresso, setProgresso] = useState("Nenhum hábito concluido ainda");
     const diaDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
     const [porcentagem, setPorcentagem] = useState(0);
-    
+    const progresso = ("Nenhum hábito concluido ainda");
     function Verdade(valor){
         return valor.done===true
     }
@@ -69,7 +68,7 @@ export default function Hoje(props) {
                 </TopoPainel>
                 <ListarHoje token={codigo.token} total={total} setPorcentagem={setPorcentagem} conteudo={habitosHoje} />
             </Painel>
-            <Footer foto= {codigo.image} token={codigo.token}></Footer>
+            <Footer foto= {codigo.image} token={codigo.token} total={total}></Footer>
 
         </Corpo>)
     }
@@ -81,8 +80,8 @@ export default function Hoje(props) {
 const Corpo = styled.div`
     background-color: #e5e5e5;
     font-family: 'Lexend Deca', sans-serif;
-    height: 100%;
-    padding-bottom: 70px;
+    min-height: 80vh;
+    padding: 70px 0;
 `
 const TopoPainel = styled.div`
     display: flex;
@@ -95,8 +94,3 @@ const TopoPainel = styled.div`
         color: #bababa;
     }
     `
-
-//falta fazer o botao check
-//falta atualizar o progresso
-//falta atualizar listar HJ, sequencia atual e seu recorde (post)
-//falta a tela do historico

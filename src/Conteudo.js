@@ -1,12 +1,15 @@
+import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 import { useState } from "react";
 import axios from "axios";
 import ListarHabitos from './ListarHabitos';
 let diasSelecionados = []
 
+
 export default function Conteudo(props) {
     const [habito, setHabito] = useState("");
     const dias = [{ D: "D", valor: 0 }, { D: "S", valor: 1 }, { D: "T", valor: 2 }, { D: "Q", valor: 3 }, { D: "Q", valor: 4 }, { D: "S", valor: 5 }, { D: "S", valor: 6 }];
+    const [loading, setLoading] = useState(false);
 
     const Authorization = {
         headers: {
@@ -24,6 +27,9 @@ export default function Conteudo(props) {
             name: habito,
             days: diasSelecionados
         }, Authorization);
+
+        setLoading(true);
+
         requisition.then(response => {
             console.log(response.data);
             alert("Seu Habito foi criado com sucesso!");
@@ -49,7 +55,8 @@ export default function Conteudo(props) {
                             diasSelecionados = []
                             props.setConteudo("")
                         }}>Cancelar</BotaoCancelar>
-                        <BotaoSalvar type="submit">Salvar</BotaoSalvar>
+                        {loading? <BotaoSalvar><ReactLoading type="bubbles" color="#fff" /></BotaoSalvar> : <BotaoSalvar type="submit">Login</BotaoSalvar>}
+                        {/* <BotaoSalvar type="submit">Login</BotaoSalvar> */}
                     </Botoes>
                 </Formulario>
 

@@ -36,7 +36,7 @@ export default function ListarHabitos(props) {
             {temHabito.map(habito =>
                 <ComHabito>
                     <Nome>{habito.name}
-                    <button onClick={() => {ExcluirHabito(habito.id, props.token, setMensagem)}}><IoTrashOutline/></button>
+                    <BotaoIcone onClick={() => {ExcluirHabito(habito.id, props.token, setMensagem)}}><IoTrashOutline/></BotaoIcone>
                     </Nome>
                     <Semana>
                         {dias.map(dia => { return (<DiaSemana letra={dia.D} valor={dia.valor} diasRecebidos={habito.days}></DiaSemana>) })}
@@ -96,7 +96,11 @@ display: flex;
 flex-direction: column;
 justify-content: space-evenly;
 border-radius: 15px;
-
+`
+const BotaoIcone = styled.button`
+    background-color: #ffffff;
+    border: none;
+    font-size: 20px;
 `
 const Nome = styled.span`
 display: flex;

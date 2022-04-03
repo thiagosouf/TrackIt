@@ -3,11 +3,14 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Logo from "./Logo"
+import ReactLoading from 'react-loading';
+
 
 export default function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     function FazerLogin(event) {
         event.preventDefault();
@@ -16,6 +19,7 @@ export default function Login(props) {
             email: email,
             password: password
         });
+        setLoading(true);
     
         requisicao.then(response => {
             console.log(response.data);
@@ -25,7 +29,7 @@ export default function Login(props) {
             props.setCodigo(response.data);
             alert("Seu Login foi realizado com sucesso!");
             
-            navigate("/habitos", { state: {foto: response.data.image , token: response.data.token} });
+            navigate("/hoje", { state: {foto: response.data.image , token: response.data.token} });
             // , state:{nome: nome, email: email, foto: foto});
             // { state: { nome: nome, dia: dia.date, hora: assentos.name, assento: lugaresReservados, nome: nome, cpf: cpf } });
         });
@@ -40,7 +44,7 @@ export default function Login(props) {
 
                 <input type="email" id="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} required></input>
                 <input type="password" id="password" placeholder="password" value={password} onChange={e => setPassword(e.target.value)} required></input>
-                <BotaoGrande type="submit">Entrar</BotaoGrande>
+                {loading? <BotaoGrande><ReactLoading type="bubbles" color="#fff" /></BotaoGrande> : <BotaoGrande type="submit">Login</BotaoGrande>}
             </Formulario>
             <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link>
         </TelaDeLogin>
@@ -74,6 +78,9 @@ background-color: #52b6ff;
 color: #ffffff;
 border-radius: 10px;
 margin-bottom: 25px;
+display: flex;
+justify-content: center;
+align-items: center;
 `
 const TelaDeLogin = styled.div`
 display: flex;

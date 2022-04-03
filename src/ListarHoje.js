@@ -5,8 +5,8 @@ import axios from "axios";
 
 export default function ListarHoje(props) {
     const { conteudo, token, setPorcentagem, total} = props;
-    const [cor, setCor] = useState(`#8FC549`);
     const [validacao, setValidacao] = useState(false);
+    const cor = `#8FC549`;
     console.log("conteudo de hj")
     console.log(conteudo)
     console.log("setPorcentagem")

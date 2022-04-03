@@ -1,15 +1,35 @@
 import styled from "styled-components"
 import { useNavigate} from "react-router-dom";
 
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
+
+
 export default function Footer(props){
-    const { foto, token } = props;
+    const { foto, token, total } = props;
+    const percentage = parseInt(total*100);
     const navigate = useNavigate();
     return(
      <FooterStyle>
          <p onClick={()=>navigate("/habitos", { state: {foto: foto , token: token} })}>Hábitos</p>
-         <BotaoCentro onClick={()=>navigate("/hoje")}><p>Hoje</p></BotaoCentro>
-         
-         <p>Histórico</p>
+         <BotaoCentro onClick={()=>navigate("/hoje")}>
+            <CircularProgressbar
+            value={percentage}
+            text={`Hoje`}
+            background
+            backgroundPadding={6}
+            styles={buildStyles({
+            backgroundColor: "#3e98c7",
+            textColor: "#fff",
+            pathColor: "#fff",
+            trailColor: "transparent"
+            })}
+            >
+                <p>Hoje</p>
+            </CircularProgressbar>
+         </BotaoCentro>
+         <p onClick={()=>navigate("/historico")}>Histórico</p>
      </FooterStyle>   
     )
 }
@@ -37,11 +57,4 @@ width: 91px;
 color: #ffffff;
 margin-bottom: 40px;
 border-radius: 50%;
-/* p{
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-    border: 10px solid #52b6ff;
-    border-left-color: #FFFFFF;
-} */
 `

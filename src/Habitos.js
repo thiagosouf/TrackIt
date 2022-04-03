@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import { useState } from "react";
 import Conteudo from "./Conteudo";
 
+
 export default function Habitos(){
     const { state } = useLocation();
     const { foto, token } = state;
@@ -33,8 +34,8 @@ export default function Habitos(){
 const Corpo = styled.div`
     background-color: #e5e5e5;
     font-family: 'Lexend Deca', sans-serif;
-    height: 100%;
-    padding-bottom: 70px;
+    min-height: 80vh;
+    padding: 70px 0;
 `
 const TopoPainel = styled.div`
     display: flex;
@@ -59,7 +60,3 @@ const Plus = styled.button`
     color: #ffffff;
     border: none;
 `
-// const SemHabito = styled.span`
-// color: #666666;
-// font-size: 18px;
-// `
