@@ -27,7 +27,6 @@ export default function Login(props) {
             console.log(response.data.image)
             console.log(response.data.token)
             props.setCodigo(response.data);
-            alert("Seu Login foi realizado com sucesso!");
             
             navigate("/hoje", { state: {foto: response.data.image , token: response.data.token} });
             // , state:{nome: nome, email: email, foto: foto});
@@ -57,6 +56,7 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 margin-top: 33px;
+font-size: 20px;
 
 input{
     width: 303px;
@@ -65,6 +65,7 @@ input{
     border-radius: 10px;
     font-size: 20px;
     color: black;
+    border: 1px solid #b0b0b0;
 }
 input::placeholder{
     color: #dbdbdb;
@@ -81,6 +82,8 @@ margin-bottom: 25px;
 display: flex;
 justify-content: center;
 align-items: center;
+font-size: 20px;
+border: none
 `
 const TelaDeLogin = styled.div`
 display: flex;

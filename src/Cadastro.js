@@ -61,6 +61,7 @@ input{
     border-radius: 10px;
     font-size: 20px;
     color: black;
+    border: 1px solid #b0b0b0;
 }
 input::placeholder{
     color: #dbdbdb;
@@ -74,14 +75,17 @@ background-color: #52b6ff;
 color: #ffffff;
 border-radius: 10px;
 margin-bottom: 25px;
+font-size: 20px;
+border: none
 `
 const TelaDeLogin = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
+font-size: 20px;
 a{
-    font-size: 18px;
+    font-size: 20px;
     color: #52b6ff;
     
 }

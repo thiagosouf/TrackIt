@@ -1,31 +1,28 @@
 import Topo from "./Topo"
 import ListarHabitos from "./ListarHabitos"
-import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import {useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import { useState } from "react";
 import Conteudo from "./Conteudo";
 
 
-export default function Habitos(){
-    const { state } = useLocation();
-    const { foto, token } = state;
+export default function Habitos(props){ 
+    const {codigo} = props
     const [ conteudo, setConteudo] = useState("");
     
     return(
         <Corpo> 
-               <Topo foto={foto}/>
+               <Topo foto={codigo.image}/>
                <Painel>
                    <TopoPainel>
                         <p>Meus hábitos</p>
-                        <Plus onClick={()=>setConteudo(<Conteudo setConteudo={setConteudo} token={token}/>)}><p>+</p></Plus>
+                        <Plus onClick={()=>setConteudo(<Conteudo setConteudo={setConteudo} token={codigo.token}/>)}><p>+</p></Plus>
                    </TopoPainel>
                      {conteudo}
-                     <ListarHabitos token={token} conteudo={conteudo}/>
+                     <ListarHabitos token={codigo.token} conteudo={conteudo}/>
                    
                </Painel>
-               <Footer foto={foto} token={token}></Footer>
+               <Footer></Footer>
 
         </Corpo>
     )
@@ -34,8 +31,8 @@ export default function Habitos(){
 const Corpo = styled.div`
     background-color: #e5e5e5;
     font-family: 'Lexend Deca', sans-serif;
-    min-height: 80vh;
-    padding: 70px 0;
+    min-height: 100vh;
+    padding: 98px 0;
 `
 const TopoPainel = styled.div`
     display: flex;
@@ -43,6 +40,7 @@ const TopoPainel = styled.div`
     align-items: center;
     font-size: 23px;
     color: #126BA5;
+    margin-bottom: 20px;
     `
 const Painel = styled.div`
     padding: 0 17px;

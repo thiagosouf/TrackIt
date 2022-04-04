@@ -27,8 +27,8 @@ font-size: 18px;
 const Corpo = styled.div`
 background-color: #e5e5e5;
 font-family: 'Lexend Deca', sans-serif;
-min-height: 80vh;
-padding: 40px 0;
+min-height: 100vh;
+padding: 70px 0;
 `
 const TopoPainel = styled.div`
 display: flex;

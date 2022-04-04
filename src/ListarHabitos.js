@@ -1,3 +1,4 @@
+import ReactLoading from 'react-loading';
 import styled from "styled-components";
 import {IoTrashOutline} from "react-icons/io5"
 import { useState, useEffect } from "react"
@@ -10,6 +11,7 @@ const dias = [{ D: "D", valor: 0 }, { D: "S", valor: 1 }, { D: "T", valor: 2 }, 
 export default function ListarHabitos(props) {
     const [temHabito, setTemHabito] = useState([]);
     const [mensagem, setMensagem] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const Authorization = {
         headers: {
@@ -20,10 +22,14 @@ export default function ListarHabitos(props) {
     // ele passa um array days dentro do response / cada habito tem um array days
     useEffect(() => {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", Authorization);
+        
+        
+
         promise.then(response => {
             const { data } = response;
             console.log(data);
             setTemHabito(data);
+            setLoading(false);
         });
         promise.catch(err => alert("deu ruim :("));
     },[mensagem, props.conteudo])
@@ -32,16 +38,21 @@ export default function ListarHabitos(props) {
     console.log("mostrar conteudo")
     console.log(props.conteudo)
     return temHabito.length >0  ? (
+        
         <>
+        {loading? <Carregamento><ReactLoading type="spokes" color="#52B6FF" /></Carregamento> : <>
+    
             {temHabito.map(habito =>
                 <ComHabito>
                     <Nome>{habito.name}
-                    <BotaoIcone onClick={() => {ExcluirHabito(habito.id, props.token, setMensagem)}}><IoTrashOutline/></BotaoIcone>
+                    <BotaoIcone onClick={() => {ExcluirHabito(habito.id, props.token, setMensagem, setLoading)}}>
+                    <IoTrashOutline/>
+                    </BotaoIcone>
                     </Nome>
                     <Semana>
                         {dias.map(dia => { return (<DiaSemana letra={dia.D} valor={dia.valor} diasRecebidos={habito.days}></DiaSemana>) })}
                     </Semana>
-                </ComHabito>)}
+                </ComHabito>)}</>}
         </>
     ) : (
         <><SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito></>
@@ -64,7 +75,7 @@ function DiaSemana(props) {
     )
 }
 
-function ExcluirHabito(id, token, setMensagem){
+function ExcluirHabito(id, token, setMensagem, setLoading) {
     console.log("entrou aqui")
     console.log(token)
     const Authorization = {
@@ -73,9 +84,11 @@ function ExcluirHabito(id, token, setMensagem){
         }
     }
     const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, Authorization);
+    setLoading(true);
     promise.then(response => {
         console.log("habito excluido");
         setMensagem(`Hábito ${id} excluido com sucesso!`)
+        
     });
     promise.catch(err => alert("deu ruim :("));
 }
@@ -86,7 +99,7 @@ font-size: 18px;
 `
 const ComHabito = styled.div`
 height: 95px;
-width: 95%;
+width: 100%;
 background-color: #ffffff;
 color: #666666;
 font-size: 20px;
@@ -132,3 +145,8 @@ const BotaoOn = styled.button`
     font-size: 20px;
     margin-right: 4px;
 `
+const Carregamento = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    `

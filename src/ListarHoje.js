@@ -86,7 +86,7 @@ export default function ListarHoje(props) {
 
 const ComHabito = styled.div`
 height: 95px;
-width: 90%;
+width: 100%;
 background-color: #ffffff;
 color: #666666;
 font-size: 20px;

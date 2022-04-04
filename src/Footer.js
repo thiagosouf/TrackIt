@@ -7,12 +7,12 @@ import 'react-circular-progressbar/dist/styles.css';
 
 
 export default function Footer(props){
-    const { foto, token, total } = props;
+    const { total } = props;
     const percentage = parseInt(total*100);
     const navigate = useNavigate();
     return(
      <FooterStyle>
-         <p onClick={()=>navigate("/habitos", { state: {foto: foto , token: token} })}>Hábitos</p>
+         <p onClick={()=>navigate("/habitos")}>Hábitos</p>
          <BotaoCentro onClick={()=>navigate("/hoje")}>
             <CircularProgressbar
             value={percentage}

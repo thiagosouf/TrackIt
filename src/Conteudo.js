@@ -2,7 +2,6 @@ import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 import { useState } from "react";
 import axios from "axios";
-import ListarHabitos from './ListarHabitos';
 let diasSelecionados = []
 
 
@@ -32,7 +31,6 @@ export default function Conteudo(props) {
 
         requisition.then(response => {
             console.log(response.data);
-            alert("Seu Habito foi criado com sucesso!");
             diasSelecionados = []
             props.setConteudo("")
             
@@ -56,7 +54,6 @@ export default function Conteudo(props) {
                             props.setConteudo("")
                         }}>Cancelar</BotaoCancelar>
                         {loading? <BotaoSalvar><ReactLoading type="bubbles" color="#fff" /></BotaoSalvar> : <BotaoSalvar type="submit">Login</BotaoSalvar>}
-                        {/* <BotaoSalvar type="submit">Login</BotaoSalvar> */}
                     </Botoes>
                 </Formulario>
 
@@ -125,8 +122,8 @@ const DivHabito = styled.div`
     `
 const NovoHabito = styled.div`
 height: 180px;
-width: 340px;
-border-radius: 5px;
+width: 100vw;
+border-radius: 15px;
 background-color: #ffffff;
 
 `
@@ -168,6 +165,9 @@ border: none;
 border-radius: 5px;
 color: #ffffff;
 margin-right: 15px;
+display: flex;
+justify-content: center;
+align-items: center;
 `
 const BotaoCancelar = styled.button`
 border: none;

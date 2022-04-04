@@ -17,9 +17,10 @@ const TopoStyle = styled.div`
     justify-content: space-between;
     align-items: center;
     height: 70px;
-    width: 90vw;
+    width: 100vw;
     background-color: #126BA5;
     padding: 0 10px;
+    box-shadow: 0px 4px 4px 0px #00000026;
     img{
         width: 50px;
         height: 50px;

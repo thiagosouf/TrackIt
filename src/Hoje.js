@@ -55,7 +55,7 @@ export default function Hoje(props) {
 
     return (
         <Corpo>
-            <Topo foto={codigo.image} />
+            <Topo foto={codigo.image} /> 
             <Painel>
                 <TopoPainel>
                     {diaDaSemana[dayjs().day()]}, {dayjs().format("DD/MM")}
@@ -80,7 +80,7 @@ export default function Hoje(props) {
 const Corpo = styled.div`
     background-color: #e5e5e5;
     font-family: 'Lexend Deca', sans-serif;
-    min-height: 80vh;
+    min-height: 100vh;
     padding: 70px 0;
 `
 const TopoPainel = styled.div`
