@@ -37,9 +37,8 @@ export default function Hoje(props) {
             const { data } = response;
             setHabitosHoje(data);
             
-            
         });
-        promise.catch(err => alert("deu ruim :("));
+        promise.catch(err => alert("Não foi possível carregar os hábitos hoje"));
     },[porcentagem])
 
 
@@ -56,7 +55,7 @@ export default function Hoje(props) {
                         )
                     }
                 </TopoPainel>
-                <ListarHoje token={codigo.token} total={total} setPorcentagem={setPorcentagem} conteudo={habitosHoje} />
+                <ListarHoje token={codigo.token} setPorcentagem={setPorcentagem} conteudo={habitosHoje} />
             </Painel>
             <Footer foto= {codigo.image} token={codigo.token} total={total}></Footer>
 

@@ -1,10 +1,10 @@
 import styled from "styled-components"
-import {BsCheckLg} from "react-icons/bs"
+import { BsCheckLg } from "react-icons/bs"
 import axios from "axios";
 
-export default function ListarHoje(props) {
-    const { conteudo, token, setPorcentagem} = props;
 
+export default function ListarHoje(props) {
+    const { conteudo, token, setPorcentagem } = props;
     const cor = `#8FC549`;
     const Authorization = {
         headers: {
@@ -12,35 +12,35 @@ export default function ListarHoje(props) {
         }
     }
 
-    //nao preciso colocar um set bool, posso colocar uma variavel normal que muda pelo id
-    function SelecionarBotao(diaId){ 
-        
-        const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/check`,{}, Authorization);
-        requisicao.then(response => {
-            setPorcentagem(diaId)
 
-            
-    
-         });
-        requisicao.catch(err => alert("deu ruim :("));
+
+    function SelecionarBotao(diaId) {
+
+        const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/check`, {}, Authorization);
+        requisicao.then(response => {
+            setPorcentagem(`s${diaId}`)
+
+
+
+        });
+        requisicao.catch(err => alert("Não foi possível marcar o hábito"));
     }
 
-    function DesmarcarBotao(diaId){
-    
-        
-        const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/uncheck`,{}, Authorization);
-        requisicao.then(response => {
-            setPorcentagem(diaId)
+    function DesmarcarBotao(diaId) {
 
-            
-    
-         });
-        requisicao.catch(err => alert("deu ruim :("));
+
+        const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/uncheck`, {}, Authorization);
+        requisicao.then(response => {
+            setPorcentagem(`d${diaId}`)
+
+
+
+        });
+        requisicao.catch(err => alert("Não foi possível desmarcar o hábito"));
     }
-    
     return conteudo.length > 0 ? (
         <>
-            
+
             {conteudo.map(dia => {
                 return (
                     <ComHabito>
@@ -49,20 +49,20 @@ export default function ListarHoje(props) {
                                 {dia.name}
                             </Nome>
 
-                            <InfoHJ>Sequencia atual: <span style={{color: dia.done?  `${cor}` : ``}}>{dia.currentSequence} dias</span></InfoHJ>
-                            <InfoHJ>Seu recorder: <span style={{color: (dia.done && dia.currentSequence===dia.highestSequence)? `${cor}` : ``}}>{dia.highestSequence} dias</span></InfoHJ>
+                            <InfoHJ>Sequencia atual: <span style={{ color: dia.done ? `${cor}` : `` }}>{dia.currentSequence} dias</span></InfoHJ>
+                            <InfoHJ>Seu recorder: <span style={{ color: (dia.done && dia.currentSequence === dia.highestSequence) ? `${cor}` : `` }}>{dia.highestSequence} dias</span></InfoHJ>
                         </InfoHabito>
-                        {dia.done? (
-                            <CheckHabito style={{backgroundColor: `${cor}`}} onClick={() => {DesmarcarBotao(dia.id)}}><BsCheckLg  /></CheckHabito>)
-                        :
-                            <CheckHabito onClick={() => {SelecionarBotao(dia.id)}}><BsCheckLg  /></CheckHabito>
+                        {dia.done ? (
+                            <CheckHabito style={{ backgroundColor: `${cor}` }} onClick={() => { DesmarcarBotao(dia.id) }}><BsCheckLg /></CheckHabito>)
+                            :
+                            <CheckHabito onClick={() => { SelecionarBotao(dia.id) }}><BsCheckLg /></CheckHabito>
                         }
-                        
-                        
+
+
                     </ComHabito>
                 )
             })}
-            </>      
+        </>
     ) : (
         <SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito>
     )
@@ -100,7 +100,7 @@ color: #666666;
 font-size: 18px;
 `
 
-const CheckHabito= styled.button`
+const CheckHabito = styled.button`
 height: 69px;
 width: 69px;
 border: 1px solid #e7e7e7;

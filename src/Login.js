@@ -28,7 +28,8 @@ export default function Login(props) {
             // , state:{nome: nome, email: email, foto: foto});
             // { state: { nome: nome, dia: dia.date, hora: assentos.name, assento: lugaresReservados, nome: nome, cpf: cpf } });
         });
-        requisicao.catch(err => alert("deu ruim :("));
+        requisicao.catch(err => {alert("Usuario ou senha incorretos");setLoading(false);});
+        
     }
     
 

@@ -33,7 +33,7 @@ export default function Conteudo(props) {
             // desabilitar janela conteudo
             // mostrar habito criado
         });
-        requisition.catch(err => alert("deu ruim :("));
+        requisition.catch(err => {alert("Não foi possível criar o habito");setLoading(false);});
     }
 
     return (
