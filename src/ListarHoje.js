@@ -1,61 +1,46 @@
 import styled from "styled-components"
 import {BsCheckLg} from "react-icons/bs"
-import { useState } from "react";
 import axios from "axios";
 
 export default function ListarHoje(props) {
-    const { conteudo, token, setPorcentagem, total} = props;
-    const [validacao, setValidacao] = useState(false);
+    const { conteudo, token, setPorcentagem} = props;
+
     const cor = `#8FC549`;
-    console.log("conteudo de hj")
-    console.log(conteudo)
-    console.log("setPorcentagem")
-    //nao preciso colocar um set bool, posso colocar uma variavel normal que muda pelo id
-    function SelecionarBotao(token, diaId, diaDone){
-        console.log("clicou")
-        console.log(diaId)
-        console.log(token)
-    
-        const Authorization = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+    const Authorization = {
+        headers: {
+            Authorization: `Bearer ${token}`
         }
-    
+    }
+
+    //nao preciso colocar um set bool, posso colocar uma variavel normal que muda pelo id
+    function SelecionarBotao(diaId){ 
+        
         const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/check`,{}, Authorization);
         requisicao.then(response => {
-            console.log("item marcado");
             setPorcentagem(diaId)
+
             
     
          });
         requisicao.catch(err => alert("deu ruim :("));
     }
 
-    function DesmarcarBotao(token, diaId, diaDone){
-        console.log("clicou")
-        console.log(diaId)
-        console.log(token)
+    function DesmarcarBotao(diaId){
     
-        const Authorization = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
-    
+        
         const requisicao = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${diaId}/uncheck`,{}, Authorization);
         requisicao.then(response => {
-            console.log("item marcado");
             setPorcentagem(diaId)
+
             
     
          });
         requisicao.catch(err => alert("deu ruim :("));
     }
-
+    
     return conteudo.length > 0 ? (
         <>
-
+            
             {conteudo.map(dia => {
                 return (
                     <ComHabito>
@@ -68,17 +53,16 @@ export default function ListarHoje(props) {
                             <InfoHJ>Seu recorder: <span style={{color: (dia.done && dia.currentSequence===dia.highestSequence)? `${cor}` : ``}}>{dia.highestSequence} dias</span></InfoHJ>
                         </InfoHabito>
                         {dia.done? (
-                            <CheckHabito style={{backgroundColor: `${cor}`}} onClick={() => {DesmarcarBotao(token, dia.id, dia.done)}}><BsCheckLg  /></CheckHabito>)
+                            <CheckHabito style={{backgroundColor: `${cor}`}} onClick={() => {DesmarcarBotao(dia.id)}}><BsCheckLg  /></CheckHabito>)
                         :
-                            <CheckHabito onClick={() => {SelecionarBotao(token, dia.id, dia.done)}}><BsCheckLg  /></CheckHabito>
+                            <CheckHabito onClick={() => {SelecionarBotao(dia.id)}}><BsCheckLg  /></CheckHabito>
                         }
                         
                         
                     </ComHabito>
                 )
             })}
-
-        </>
+            </>      
     ) : (
         <SemHabito>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</SemHabito>
     )

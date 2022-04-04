@@ -10,9 +10,7 @@ import dayjs from "dayjs";
 
 
 export default function Hoje(props) {
-    console.log("entrou aqui")
     const {codigo} = props;
-    console.log(codigo)
     const [habitosHoje, setHabitosHoje] = useState([]);
     const diaDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
     const [porcentagem, setPorcentagem] = useState(0);
@@ -25,8 +23,6 @@ export default function Hoje(props) {
     total = habitosHoje.filter(Verdade).length/habitosHoje.length
     :
     total = 0;
-    console.log("total")
-    console.log(total)
 
     const Authorization = {
         headers: {
@@ -39,18 +35,12 @@ export default function Hoje(props) {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", Authorization);
         promise.then(response => {
             const { data } = response;
-            console.log(data);
             setHabitosHoje(data);
+            
             
         });
         promise.catch(err => alert("deu ruim :("));
     },[porcentagem])
-    console.log("habitos hoje")
-    console.log(habitosHoje)
-    console.log("dayjs")
-    console.log(dayjs().day())
-    console.log("porcentagem")
-    console.log(porcentagem)
 
 
     return (

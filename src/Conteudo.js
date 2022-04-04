@@ -15,12 +15,9 @@ export default function Conteudo(props) {
             Authorization: `Bearer ${props.token}`
         }
     }
-    console.log(props.token)
 
     function CriarHabito(event) {
         event.preventDefault();
-        console.log(habito)
-        console.log(diasSelecionados)
 
         const requisition = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", {
             name: habito,
@@ -30,7 +27,6 @@ export default function Conteudo(props) {
         setLoading(true);
 
         requisition.then(response => {
-            console.log(response.data);
             diasSelecionados = []
             props.setConteudo("")
             
@@ -70,18 +66,14 @@ function DiaSemana(props) {
     return selecionado === false ? (
         <>
             <BotaoOff type="button" value="" onClick={() => {
-                console.log(props.valor)
                 props.dias.push(props.valor)
                 setSelecionado(true)
-                console.log(props.dias)
             }}>{props.letra}</BotaoOff>
         </>
     ) : (<>
         <BotaoOn type="button" value={props.valor} onClick={() => {
-            console.log(props.valor)
             props.dias.splice(props.dias.indexOf(props.valor), 1)
             setSelecionado(false)
-            console.log(props.dias)
         }}>{props.letra}</BotaoOn>
     </>)
 }

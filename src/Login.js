@@ -22,10 +22,6 @@ export default function Login(props) {
         setLoading(true);
     
         requisicao.then(response => {
-            console.log(response.data);
-            console.log(response.data.name)
-            console.log(response.data.image)
-            console.log(response.data.token)
             props.setCodigo(response.data);
             
             navigate("/hoje", { state: {foto: response.data.image , token: response.data.token} });

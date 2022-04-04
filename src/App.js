@@ -8,7 +8,7 @@ import Historico from "./Historico"
 import { useState } from "react";
 
 export default function App() {
-    const [codigo, setCodigo] = useState(''); 
+    const [codigo, setCodigo] = useState('');
     
     return (
         <>

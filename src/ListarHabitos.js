@@ -19,6 +19,16 @@ export default function ListarHabitos(props) {
         }
     }
 
+    function ExcluirHabito(id, setMensagem, setLoading) {
+        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, Authorization);
+        setLoading(true);
+        promise.then(response => {
+            setMensagem(`Hábito ${id} excluido com sucesso!`)
+            
+        });
+        promise.catch(err => alert("deu ruim :("));
+    }
+
     // ele passa um array days dentro do response / cada habito tem um array days
     useEffect(() => {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", Authorization);
@@ -27,16 +37,12 @@ export default function ListarHabitos(props) {
 
         promise.then(response => {
             const { data } = response;
-            console.log(data);
             setTemHabito(data);
             setLoading(false);
         });
         promise.catch(err => alert("deu ruim :("));
     },[mensagem, props.conteudo])
 
-    console.log(temHabito)
-    console.log("mostrar conteudo")
-    console.log(props.conteudo)
     return temHabito.length >0  ? (
         
         <>
@@ -45,7 +51,7 @@ export default function ListarHabitos(props) {
             {temHabito.map(habito =>
                 <ComHabito>
                     <Nome>{habito.name}
-                    <BotaoIcone onClick={() => {ExcluirHabito(habito.id, props.token, setMensagem, setLoading)}}>
+                    <BotaoIcone onClick={() => {ExcluirHabito(habito.id, setMensagem, setLoading)}}>
                     <IoTrashOutline/>
                     </BotaoIcone>
                     </Nome>
@@ -75,23 +81,7 @@ function DiaSemana(props) {
     )
 }
 
-function ExcluirHabito(id, token, setMensagem, setLoading) {
-    console.log("entrou aqui")
-    console.log(token)
-    const Authorization = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-    const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, Authorization);
-    setLoading(true);
-    promise.then(response => {
-        console.log("habito excluido");
-        setMensagem(`Hábito ${id} excluido com sucesso!`)
-        
-    });
-    promise.catch(err => alert("deu ruim :("));
-}
+
 
 const SemHabito = styled.span`
 color: #666666;

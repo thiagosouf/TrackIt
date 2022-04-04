@@ -25,7 +25,6 @@ export default function Cadastro() {
         requisicao.then(response => {
             alert("Seu cadastro foi realizado com sucesso!");
             navigate("/");
-            // { state: { nome: nome, dia: dia.date, hora: assentos.name, assento: lugaresReservados, nome: nome, cpf: cpf } });
         });
         requisicao.catch(err => alert("deu ruim :("));
     }
